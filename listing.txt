@@ -1,0 +1,33 @@
+﻿
+Name             Length
+----             ------
+envcheck.ps1       1962
+envcheck.txt       1136
+inspect_run.txt    2408
+listing.txt           0
+pipinstall.log      100
+py313.txt           170
+pyprobe.ps1        2856
+pyprobe.txt        2330
+rebuild_venv.ps1   1888
+scan_emoji.cjs     2169
+_tree.txt          8606
+
+
+
+Name               Length
+----               ------
+dbreport.txt         3044
+dbreport2.txt       62955
+docker-compose.yml    872
+inspect2.cjs         2884
+inspect_db.cjs       7000
+README.md            2125
+run_locally.ps1      3580
+
+
+START 2026-09-29T21:36:01
+--- venv create ---
+
+venv python exists: True
+--- pip upgrade ---

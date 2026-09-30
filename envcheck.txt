@@ -1,0 +1,35 @@
+﻿=== python version ===
+3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]
+C:\Program Files\Python313\python.exe
+
+=== global deps ===
+python.exe :   File "<string>", line 5
+At C:\Users\hp\Desktop\Eric project\envcheck.ps1:7 char:2
++ (& $py -c 'import importlib
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "<string>", line 5:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    print(OK
+         ^
+SyntaxError: '(' was never closed
+
+=== venv site-packages on PYTHONPATH ===
+python.exe :   File "<string>", line 5
+At C:\Users\hp\Desktop\Eric project\envcheck.ps1:17 char:2
++ (& $py -c 'import importlib
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "<string>", line 5:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    print(OK
+         ^
+SyntaxError: '(' was never closed
+
+=== pip present ===
+pip 26.1.2 from C:\Program Files\Python313\Lib\site-packages\pip (python 3.13)
+
+
+=== pypi reachable (5s timeout) ===
+pypi: 200
+=== END ===

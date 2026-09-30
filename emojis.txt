@@ -1,0 +1,22 @@
+scanned files: 171
+emoji lines: 8
+
+--- InfraCred\frontend\src\pages\authority\ClusterDetail.tsx (1) ---
+  L241 [📍]  📍 {report.address || 'Address not provided'}
+
+--- InfraCred\frontend\src\pages\authority\ClusterList.tsx (1) ---
+  L136 [📍]  📍 {cluster.center_address || 'Multiple Locations'}
+
+--- InfraCred\frontend\src\pages\citizen\CitizenDashboard.tsx (2) ---
+  L66 [👋]  Welcome back, {user?.username} 👋
+  L162 [📍]  📍 {report.address || 'Location Record'}
+
+--- InfraCred\frontend\src\pages\citizen\ConfirmReports.tsx (2) ---
+  L97 [🔥]  🔥 {report.confirmation_count} Votes
+  L104 [📍]  📍 {report.address || 'Location Hidden'}
+
+--- InfraCred\frontend\src\pages\citizen\NearbyReports.tsx (1) ---
+  L119 [📍]  📍 {report.address || 'Location Hidden'}
+
+--- InfraCred\frontend\src\pages\citizen\ReportIssue.tsx (1) ---
+  L133 [✓]  ✓
