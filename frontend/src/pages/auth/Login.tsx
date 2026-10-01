@@ -31,7 +31,7 @@ const Login = () => {
 
         try {
             const res = await client.post('/accounts/login/', credentials);
-            login(res.data.user, res.data.access);
+            login(res.data.user, res.data.access, res.data.refresh);
             navigate('/');
         } catch (err: any) {
             setError(err.response?.data?.detail || 'Invalid username or password');
@@ -207,7 +207,9 @@ const Login = () => {
                                         Password
                                     </Typography>
                                     <Link
-                                        href="#"
+                                        component="button"
+                                        type="button"
+                                        onClick={() => navigate('/password-reset')}
                                         sx={{
                                             fontSize: '0.75rem',
                                             fontWeight: 600,

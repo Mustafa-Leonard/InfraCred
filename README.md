@@ -47,9 +47,13 @@ InfraCred is a robust, community-driven platform designed to support the reporti
 
 ### Installation
 1. Clone the repository.
-2. Run `docker-compose up --build`.
-3. Access the frontend at `http://localhost:3000`.
-4. Access the API documentation at `http://localhost:8000/api/docs/`.
+2. Start the database and Redis with `docker compose up -d db redis`.
+3. Apply database migrations with `docker compose run --rm backend python manage.py migrate --noinput`.
+4. Start the application with `docker compose up --build`.
+5. Access the frontend at `http://localhost:3000`.
+6. Access the API documentation at `http://localhost:8000/api/docs/`.
+
+Password-reset emails use the console backend by default and print their one-time link in the backend output. For real email delivery, configure `EMAIL_BACKEND`, `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_USE_TLS`, `DEFAULT_FROM_EMAIL`, and `FRONTEND_URL` in the environment.
 
 ## 📄 License
 MIT License

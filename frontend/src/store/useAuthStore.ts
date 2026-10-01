@@ -14,9 +14,11 @@ interface User {
 interface AuthState {
   user: User | null;
   token: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
-  setAuth: (token: string) => void;
-  login: (user: User, token: string) => void;
+  setAuth: (token: string, refreshToken?: string) => void;
+  setTokens: (token: string, refreshToken?: string) => void;
+  login: (user: User, token: string, refreshToken?: string) => void;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
 }
@@ -26,17 +28,19 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       token: null,
+      refreshToken: null,
       isAuthenticated: false,
       updateUser: (userData: Partial<User>) => {
         set((state) => ({
           user: state.user ? { ...state.user, ...userData } : null
         }));
       },
-      setAuth: (token: string) => {
+      setAuth: (token: string, refreshToken?: string) => {
         try {
           const decoded: any = jwtDecode(token);
           set({
             token,
+            refreshToken: refreshToken || null,
             user: {
               id: decoded.user_id,
               username: decoded.username || '',
@@ -47,10 +51,17 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error) {
           console.error('Failed to decode token', error);
-          set({ token: null, user: null, isAuthenticated: false });
+          set({ token: null, refreshToken: null, user: null, isAuthenticated: false });
         }
       },
-      login: (user: User, token: string) => {
+      setTokens: (token: string, refreshToken?: string) => {
+        set((state) => ({
+          token,
+          refreshToken: refreshToken || state.refreshToken,
+          isAuthenticated: !!token,
+        }));
+      },
+      login: (user: User, token: string, refreshToken?: string) => {
         // Robust normalization
         let normalizedUser = user;
         if (user) {
@@ -75,10 +86,10 @@ export const useAuthStore = create<AuthState>()(
           }
         }
 
-        set({ user: normalizedUser, token, isAuthenticated: !!token });
+        set({ user: normalizedUser, token, refreshToken: refreshToken || null, isAuthenticated: !!token });
       },
       logout: () => {
-        set({ token: null, user: null, isAuthenticated: false });
+        set({ token: null, refreshToken: null, user: null, isAuthenticated: false });
         localStorage.removeItem('infracred-auth');
       },
     }),

@@ -24,6 +24,7 @@ const Register = () => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
+    const [showAccountRecovery, setShowAccountRecovery] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -33,18 +34,26 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setShowAccountRecovery(false);
 
         try {
-            await client.post('/accounts/register/', formData);
-            // Auto login after registration
-            const loginRes = await client.post('/accounts/login/', {
-                username: formData.username,
-                password: formData.password
-            });
-            login(loginRes.data.user, loginRes.data.access);
+            const response = await client.post('/accounts/register/', formData);
+            login(response.data.user, response.data.access, response.data.refresh);
             navigate('/');
         } catch (err: any) {
-            setError(err.response?.data?.username?.[0] || err.response?.data?.detail || 'Registration failed');
+            const errors = err.response?.data;
+            const usernameError = errors?.username?.[0] || '';
+            const emailError = errors?.email?.[0] || '';
+            setShowAccountRecovery(/already|exist/i.test(`${usernameError} ${emailError}`));
+            setError(
+                errors?.non_field_errors?.[0] ||
+                usernameError ||
+                emailError ||
+                errors?.password?.[0] ||
+                errors?.role?.[0] ||
+                errors?.detail ||
+                'Registration failed'
+            );
         } finally {
             setLoading(false);
         }
@@ -180,6 +189,19 @@ const Register = () => {
                             </Box>
 
                             {error && <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>{error}</Alert>}
+                            {showAccountRecovery && (
+                                <Typography variant="body2" sx={{ mb: 3, textAlign: 'center' }}>
+                                    Already registered?{' '}
+                                    <Link component="button" type="button" onClick={() => navigate('/login')}>
+                                        Sign in
+                                    </Link>
+                                    {' or '}
+                                    <Link component="button" type="button" onClick={() => navigate('/password-reset')}>
+                                        reset your password
+                                    </Link>
+                                    .
+                                </Typography>
+                            )}
 
                             <form onSubmit={handleSubmit}>
                                 <Box sx={{ mb: 3 }}>
@@ -227,6 +249,8 @@ const Register = () => {
                                     value={formData.username}
                                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                                     required
+                                    helperText="Choose a username."
+                                    inputProps={{ autoComplete: 'username', maxLength: 150 }}
                                     sx={{
                                         mb: 2,
                                         '& .MuiOutlinedInput-root': {
@@ -269,6 +293,8 @@ const Register = () => {
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     required
+                                    helperText="At least 8 characters; avoid common passwords and personal details."
+                                    inputProps={{ autoComplete: 'new-password' }}
                                     sx={{
                                         mb: 4,
                                         '& .MuiOutlinedInput-root': {

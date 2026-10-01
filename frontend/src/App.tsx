@@ -7,6 +7,7 @@ import { useAuthStore } from './store/useAuthStore';
 // Pages
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import PasswordReset from './pages/auth/PasswordReset';
 import ReportIssue from './pages/citizen/ReportIssue';
 import MyReports from './pages/citizen/MyReports';
 import NearbyReports from './pages/citizen/NearbyReports';
@@ -171,6 +172,8 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/password-reset" element={<PasswordReset />} />
+                    <Route path="/reset-password" element={<PasswordReset />} />
 
                     <Route element={<Layout />}>
                         <Route path="/" element={<HomeRedirect />} />
